@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name='元气满满'

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFD946</color>
+    <color name="colorPrimaryDark">#FFD946</color>
+    <color name="colorAccent">#FFD946</color>
+    <color name="splashBackgroundColor">#FFD946</color>
+    <color name="appThemeColor">#FFD946</color>
+    <color name="mainActivityBottomDividerColor">#0C4B4B4B</color>
+    <color name="mainAcitivityBottomBarColorUnselected">#cdcdcd</color>
+</resources>

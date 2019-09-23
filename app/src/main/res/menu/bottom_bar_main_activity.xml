@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main"
+        android:icon="@drawable/icon_bottom_main"
+        android:title="元气" />
+    <item
+        android:id="@+id/record"
+        android:icon="@drawable/icon_bottom_record"
+        android:title="记录" />
+    <item
+        android:id="@+id/tools"
+        android:icon="@drawable/icon_bottom_tools"
+        android:title="工具" />
+    <item
+        android:id="@+id/me"
+        android:icon="@drawable/icon_bottom_me"
+        android:title="更多" />
+</menu>
