@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="vitality_value_background_frame">1dp</dimen>
+    <dimen name="vitality_value_frame_radiu">5dp</dimen>
+</resources>

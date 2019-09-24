@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="@dimen/vitality_value_frame_radiu"></corners>
+    <solid android:color="#0fff"></solid>
+    <stroke
+        android:width="@dimen/vitality_value_background_frame"
+        android:color="@color/vitality_frame_color" />
+</shape>
