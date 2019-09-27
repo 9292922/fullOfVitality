@@ -26,9 +26,7 @@ public class tasks {
         this.status = status;
     }
 
-    public tasks getTask() {
-        return this;
-    }
+
 
 
 }

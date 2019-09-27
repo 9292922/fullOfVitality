@@ -1,13 +1,11 @@
 package com.magicalstory.vitality;
 
 import android.content.Context;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -32,15 +30,54 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
     public mainTaskListAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
         view = View.inflate(context, R.layout.main_task_item_common, null);
-        Log.d("测试", view.toString());
         return new viewHolder(view);
     }
 
+    //绑定组件的内容和事件
     @Override
-    public void onBindViewHolder(@NonNull mainTaskListAdapter.viewHolder holder, int position) {
-        com.magicalstory.vitality.tasks task;
+    public void onBindViewHolder(@NonNull final mainTaskListAdapter.viewHolder holder, int position) {
+        final com.magicalstory.vitality.tasks task;
         task = tasks.get(position);//获取任务实例对象
         holder.textView_title.setText(task.getName());//获取任务名字
+
+        setStatusUI(holder, task.isStatus());//初始化任务状态按钮ui
+
+
+        //------------------设置小任务图标点击事件--------------------
+        holder.imageView_status_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //可直接实现点击事件，也可以回调到activity
+                task.setStatus(!task.isStatus());//切换状态
+                setStatusUI(holder, task.isStatus());//初始化任务状态按钮ui
+            }
+        });
+
+        //------------------设置任务布局点击事件--------------------
+        holder.status_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //可直接实现点击事件，也可以回调到activity
+                task.setStatus(!task.isStatus());//切换状态
+                setStatusUI(holder, task.isStatus());//初始化任务状态按钮ui
+            }
+        });
+
+
+    }
+
+
+    public void setStatusUI(@NonNull final mainTaskListAdapter.viewHolder holder, boolean status) {
+        holder.status_button.setSelected(status);
+        if (status) {
+            holder.textView_title.setTextColor(context.getResources().getColor(R.color.deleted));
+            holder.textView_title.setPaintFlags(holder.textView_title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+
+        } else {
+            holder.textView_title.setTextColor(context.getResources().getColor(R.color.black));
+            holder.textView_title.setPaintFlags(holder.textView_title.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
     }
 
     //返回列表项总长度
@@ -50,26 +87,23 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
 
     }
 
+    interface onClickListener {
+
+    }
+
     //viewHolder
     class viewHolder extends RecyclerView.ViewHolder {
         private TextView textView_title;
-        private ImageView imageView_icon;
-        private ConstraintLayout imageView_icon_background;
         private TextView textView_status;
+        private ConstraintLayout status_button;
+        private ImageView imageView_status_right;
 
         public viewHolder(View itemView) {
             super(itemView);
-            //itemView来源:  view = View.inflate(context, R.layout.main_task_item_common, null);
-            imageView_icon = itemView.findViewById(R.id.imageView_task_icon);
-            imageView_icon_background = itemView.findViewById(R.id.task_list_icon_background);
-            textView_title = itemView.findViewById(R.id.textView_title);
+            textView_title = itemView.findViewById(R.id.textView_task_list_title);
             textView_status = itemView.findViewById(R.id.textView_status);
-
-            if (textView_title == null) {
-                Log.d("viewHolder", "对象为空");
-            } else {
-                Log.d("viewHolder", "对象不为空");
-            }
+            imageView_status_right = itemView.findViewById(R.id.img_status_icon);
+            status_button = itemView.findViewById(R.id.button_status);
         }
     }
 }

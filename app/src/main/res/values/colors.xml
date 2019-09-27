@@ -11,4 +11,6 @@
     <color name="main_background_color">#3CFFF5D7</color>
     <color name="record_color">#2CEBE1BE</color>
     <color name="record_frame_color">#99FFC400</color>
+    <color name="black">#000000</color>
+    <color name="deleted">#BEBEBE</color>
 </resources>
