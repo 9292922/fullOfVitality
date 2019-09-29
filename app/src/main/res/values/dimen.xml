@@ -2,4 +2,7 @@
 <resources>
     <dimen name="vitality_value_background_frame">1dp</dimen>
     <dimen name="vitality_value_frame_radiu">5dp</dimen>
+    <dimen name="new_task_button_dimen">5dp</dimen>
+    <dimen name="task_text_size_little">14sp</dimen>
+    <dimen name="item_time_size">12sp</dimen>
 </resources>

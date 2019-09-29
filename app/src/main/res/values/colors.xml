@@ -12,5 +12,10 @@
     <color name="record_color">#2CEBE1BE</color>
     <color name="record_frame_color">#99FFC400</color>
     <color name="black">#000000</color>
+    <color name="button_task_pressed">#E2C13F</color>
     <color name="deleted">#BEBEBE</color>
+    <color name="White">#ffffff</color>
+    <color name="Gray">#60C9C9C9</color>
+    <color name="text_time_color">#BDBBBB</color>
+    <color name="task_num_color">#90CAF9</color>
 </resources>
