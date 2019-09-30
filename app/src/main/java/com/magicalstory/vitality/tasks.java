@@ -1,27 +1,127 @@
 package com.magicalstory.vitality;
 
+import java.util.ArrayList;
+
 public class tasks {
+    /*
+     *该类为任务类
+     *
+     * */
+    static String TAG = "任务类";
+    static String id;//任务标识ID
+    private static int allTaskNum;//任务总数
+    private static int completedTaskNum;//已完成任务
+    private static int vitalityToday;//今天元气值
     private String name;//任务名字
     private boolean status;//任务状态
     private String danwei;//定义单位
+    private int taskType;//任务类型
+    private int vitality;//任务的元气值
+    private int date;//任务的创建日期
+    private int type;//任务的类型，分为任务和待做
+    private int days;//总天数
+    private int keeyDays;//坚持的天数
+    private int daysRest;//剩余天数
+    private int allToDoNum;//todo总数
+    private int value;//任务的值
+    private static ArrayList<tasks> taskList=new ArrayList<>();//任务数组
+    private static ArrayList<tasks> todoList=new ArrayList<>();//todo数组
 
-    public String getDanwei() {
+    public static ArrayList<tasks> getTodoList() {
+        return todoList;
+    }
+
+    public int getAllToDoNum() {
+        return allToDoNum;
+    }
+
+    public void setAllToDoNum(int allToDoNum) {
+        this.allToDoNum = allToDoNum;
+    }
+
+    public static String getId() {
+        return id;
+    }
+
+    public static void setId(String id) {
+        tasks.id = id;
+    }
+
+    public static ArrayList<tasks> getTaskList() {
+        return taskList;
+    }
+
+    public static void setTaskList(ArrayList<tasks> taskList) {
+        tasks.taskList = taskList;
+    }
+
+    tasks(String name, int vitality, int taskType, int type) {
+        this.type = type;
+        this.taskType = taskType;
+        this.vitality = vitality;
+        this.name = name;
+        id = name + "@type=" + type + "@vitality=" + vitality;
+        if (type == com.magicalstory.vitality.type.Task) {
+            allTaskNum += 1;
+        }else {
+            allToDoNum += 1;
+        }
+
+
+    }
+
+
+    int getValue() {
+        return value;
+    }
+
+    void setValue(int value) {
+        this.value = value;
+    }
+
+    static int getAllTaskNum() {
+        return allTaskNum;
+    }
+
+    public static void setAllTaskNum(int allTaskNum) {
+        tasks.allTaskNum = allTaskNum;
+    }
+
+    static int getCompletedTaskNum() {
+        return completedTaskNum;
+    }
+
+    public static void setCompletedTaskNum(int completedTaskNum) {
+        tasks.completedTaskNum = completedTaskNum;
+    }
+
+    static int getVitalityToday() {
+        return vitalityToday;
+    }
+
+    public static void setVitalityToday(int vitalityToday) {
+        tasks.vitalityToday = vitalityToday;
+    }
+
+    public int getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(int taskType) {
+        this.taskType = taskType;
+    }
+
+
+    String getDanwei() {
         return danwei;
     }
 
-    public void setDanwei(String danwei) {
+    void setDanwei(String danwei) {
         this.danwei = danwei;
     }
 
-    private int all;//全部任务数
-    private int vitality;//任务的元气值
-    private int num;//任务的数值
-    private int date;//任务的创建日期
-    private int type;//任务的类型
-    private int days;//总天数
-    private int keeyDays;//坚持的天数
 
-    public int getDaysRest() {
+    int getDaysRest() {
         return daysRest;
     }
 
@@ -29,17 +129,11 @@ public class tasks {
         this.daysRest = daysRest;
     }
 
-    private int daysRest;//剩余天数
-
-
-
-
-
     public int getDays() {
         return days;
     }
 
-    public void setDays(int days) {
+    void setDays(int days) {
         this.days = days;
         daysRest = this.days - keeyDays;
     }
@@ -48,16 +142,11 @@ public class tasks {
         return keeyDays;
     }
 
-    public void setKeeyDays(int keeyDays) {
+    void setKeeyDays(int keeyDays) {
         this.keeyDays = keeyDays;
         daysRest = days - this.keeyDays;
     }
 
-
-
-    public int getAll() {
-        return all;
-    }
 
     public int getVitality() {
         return vitality;
@@ -67,23 +156,15 @@ public class tasks {
         this.vitality = vitality;
     }
 
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-    public int getDate() {
+    int getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    void setDate(int date) {
         this.date = date;
     }
 
-    public int getType() {
+    int getType() {
         return type;
     }
 
@@ -91,18 +172,6 @@ public class tasks {
         this.type = type;
     }
 
-
-    public void add() {
-        all += 1;
-    }
-
-    public void sub() {
-        all -= 1;
-    }
-
-    public void setAll(int num) {
-        all = num;
-    }
 
     public String getName() {
         return name;
@@ -112,12 +181,26 @@ public class tasks {
         this.name = name;
     }
 
-    public boolean isStatus() {
+    boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    void setStatus(boolean status) {
+
         this.status = status;
+        initAllCompletedTasks();
+
+    }
+
+    static void initAllCompletedTasks() {
+        //判断状态，循环任务列表找出已经完成的任务总数
+        int num=0;
+        for (int n = 0; n<taskList.size();n++) {
+            if (taskList.get(n).isStatus() == true) {
+                num++;
+            }
+        }
+        completedTaskNum = num;
     }
 
 

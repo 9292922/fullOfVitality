@@ -17,34 +17,51 @@ import java.util.ArrayList;
 public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapter.viewHolder> {
     ArrayList<tasks> tasks;//定义任务列表
     Context context;
-
+    View view;//列表项view
     //构造方法，接受参数
-    public mainTaskListAdapter(ArrayList<tasks> tasks, Context context) {
+    public mainTaskListAdapter(ArrayList<tasks> tasks, Context context,View view) {
         this.tasks = tasks;
+        this.view = view;
         this.context = context;
     }
 
+
+    @Override
+    public int getItemViewType(int position) {
+        return tasks.get(position).getType();
+    }
 
     //创建viewHolder完毕，返回实例
     @Override
     public mainTaskListAdapter.viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = View.inflate(context, R.layout.main_task_item_common, null);
+        view = View.inflate(context, (viewType==type.Task)? R.layout.main_task_item_common:R.layout.main_todo_item_common, null);
         return new viewHolder(view);
     }
 
     //绑定组件的内容和事件
     @Override
     public void onBindViewHolder(@NonNull final mainTaskListAdapter.viewHolder holder, int position) {
+
         final com.magicalstory.vitality.tasks task;
         task = tasks.get(position);//获取任务实例对象
-        //holder.textView_title.setText(task.getName());//获取任务名字
+        if (task.getType() == type.Task) {
+            //任务
+            initTaskView(holder, task);//绑定任务itemView
+        } else {
+            initToDoView(holder,task);//绑定任务itemView
+        }
 
-        holder.vitality.setText("+" + task.getVitality());//设置元气值
+
+
+    }
+
+    private void initTaskView(@NonNull final mainTaskListAdapter.viewHolder holder, final tasks task) {
+        holder.vitality.setText("+"+task.getVitality());//设置元气值
 
         //判断并设置任务值
-        holder.title_num.setText(task.getNum() + "");
-        if (task.getNum() == 0) {
+        holder.title_num.setText(String.valueOf(task.getValue()));
+        if (task.getValue() == 0) {
             holder.title_num.setVisibility(View.INVISIBLE);
             holder.title_last.setVisibility(View.INVISIBLE);
         } else {
@@ -81,7 +98,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
 
 
         //初始化任务状态按钮ui
-        setStatusUI(holder, task.isStatus());
+        changeTaskButtonUI(holder, task.isStatus());
 
 
         //------------------设置小任务图标点击事件--------------------
@@ -90,7 +107,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
             public void onClick(View v) {
                 //可直接实现点击事件，也可以回调到activity
                 task.setStatus(!task.isStatus());//切换状态
-                setStatusUI(holder, task.isStatus());//初始化任务状态按钮ui
+                changeTaskButtonUI(holder, task.isStatus());//初始化任务状态按钮ui
             }
         });
 
@@ -100,17 +117,49 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
             public void onClick(View v) {
                 //可直接实现点击事件，也可以回调到activity
                 task.setStatus(!task.isStatus());//切换状态
-                setStatusUI(holder, task.isStatus());//初始化任务状态按钮ui
+                changeTaskButtonUI(holder, task.isStatus());//初始化任务状态按钮ui
+
             }
         });
 
 
     }
 
+    private void initToDoView(@NonNull final mainTaskListAdapter.viewHolder holder, final tasks task) {
+        //初始化todo状态按钮ui
+        changeToDoButtonUI(holder, task.isStatus());
+
+        //设置todo标题
+        holder.textView_title.setText(task.getName());
+
+        //------------------设置todo图标点击事件--------------------
+        holder.imageView_status_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //可直接实现点击事件，也可以回调到activity
+                task.setStatus(!task.isStatus());//切换状态
+                changeToDoButtonUI(holder, task.isStatus());//初始化任务状态按钮ui
+            }
+        });
+
+        //------------------设置todoa按钮布局点击事件--------------------
+        holder.status_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //可直接实现点击事件，也可以回调到activity
+                task.setStatus(!task.isStatus());//切换状态
+                changeToDoButtonUI(holder, task.isStatus());//初始化todo状态按钮ui
+
+            }
+        });
+
+
+    }
 
     //任务完成与否，切换UI
-    public void setStatusUI(@NonNull final mainTaskListAdapter.viewHolder holder, boolean status) {
+    public void changeTaskButtonUI(@NonNull final mainTaskListAdapter.viewHolder holder, boolean status) {
         holder.status_button.setSelected(status);
+        HomeFragment.initTaskInfo(view);
         if (status) {
             //已完成
             holder.time2.setTextColor(context.getResources().getColor(R.color.deleted));
@@ -134,10 +183,28 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
             holder.vitality.setTextColor(context.getResources().getColor(R.color.Gray));
 
         }
+
     }
 
-    //返回列表项总长度
-    @Override
+    //ToDo完成与否，切换UI
+    public void changeToDoButtonUI(@NonNull final mainTaskListAdapter.viewHolder holder, boolean status) {
+        holder.status_button.setSelected(status);
+        HomeFragment.initTaskInfo(view);
+        if (status) {
+            //已完成
+            holder.textView_title.setTextColor(context.getResources().getColor(R.color.deleted));
+            holder.textView_title.setPaintFlags(holder.textView_title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+        } else {
+            //未完成
+            holder.textView_title.setTextColor(context.getResources().getColor(R.color.black));
+            holder.textView_title.setPaintFlags(holder.textView_title.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+
+
+        }
+
+    }
+    //返回列表项总长  @Override
     public int getItemCount() {
         return tasks.size();
 

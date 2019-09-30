@@ -21,7 +21,7 @@
             android:id="@+id/textView_time3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="天"
+            android:text="@string/item_danwei"
             android:textColor="@color/text_time_color"
             android:textSize="@dimen/item_time_size"
             app:layout_constraintBottom_toBottomOf="@+id/textView_time2"

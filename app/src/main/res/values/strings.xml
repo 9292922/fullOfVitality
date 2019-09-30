@@ -13,5 +13,7 @@
     <string name="value_total_vitality">100.6</string>
     <string name="todo">TODO</string>
     <string name="total_task_title">今日任务</string>
+    <string name="item_danwei">天</string>
+    <string name="main_bottom_tips">- - - - - - - - - - - - - - - 我可是一个有底线的应用- - - - - - - - - - - - - - - - -</string>
 
 </resources>

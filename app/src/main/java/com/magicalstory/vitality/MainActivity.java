@@ -1,21 +1,15 @@
 package com.magicalstory.vitality;
 
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.KeyEvent;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.magicalstory.vitality.databinding.FragmentHomeBinding;
-
-import java.util.ArrayList;
 
 public class MainActivity  extends AppCompatActivity  {
     ViewModel viewModel;
@@ -29,15 +23,20 @@ public class MainActivity  extends AppCompatActivity  {
 
     }
 
-
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     private void setStateBar() {
        appUtil.setStateBar(MainActivity.this);
     }
 
 
-
-
-
+    public void newTask(View view) {
+       //跳转新增任务
+    }
 }
