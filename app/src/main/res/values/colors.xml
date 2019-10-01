@@ -20,4 +20,5 @@
     <color name="task_num_color">#90CAF9</color>
     <color name="new_task_pressed">#858181</color>
     <color name="new_todo_pressed">#D3D2D2</color>
+   <color name="item_pressed_ripple">#52D3D2D2</color>
 </resources>

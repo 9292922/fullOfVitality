@@ -49,7 +49,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
             //任务
             initTaskView(holder, task);//绑定任务itemView
         } else {
-            initToDoView(holder,task);//绑定任务itemView
+            initToDoView(holder,task);//绑定ToDo的itemView
         }
 
 
@@ -70,7 +70,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
         }
 
         //设置任务创建时间
-        holder.textView_date.setText((task.getDate() == 0) ? "刚刚" : task.getDate() + "");
+        holder.textView_date.setText((task.getTargetType().equals("")) ? "默认" : task.getTargetType());
 
 
         //设置任务单位
@@ -80,7 +80,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
         holder.textView_title.setText(task.getName());
 
         //设置任务剩余时间
-        switch (task.getType()) {
+        switch (task.getTaskType()) {
             case type.taskDate://时间段任务
                 holder.time2.setText(task.getDaysRest() + "");
                 break;
@@ -100,6 +100,15 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
         //初始化任务状态按钮ui
         changeTaskButtonUI(holder, task.isStatus());
 
+        //设置item被单击切换item状态
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                task.setStatus(!task.isStatus());//切换状态
+                changeTaskButtonUI(holder, task.isStatus());//初始化任务状态按钮ui
+            }
+        });
+
 
         //------------------设置小任务图标点击事件--------------------
         holder.imageView_status_right.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +127,6 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
                 //可直接实现点击事件，也可以回调到activity
                 task.setStatus(!task.isStatus());//切换状态
                 changeTaskButtonUI(holder, task.isStatus());//初始化任务状态按钮ui
-
             }
         });
 
@@ -131,6 +139,16 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
 
         //设置todo标题
         holder.textView_title.setText(task.getName());
+
+
+        //设置item被单击切换item状态
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                task.setStatus(!task.isStatus());//切换状态
+                changeToDoButtonUI(holder, task.isStatus());//初始化任务状态按钮ui
+            }
+        });
 
         //------------------设置todo图标点击事件--------------------
         holder.imageView_status_right.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +180,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
         HomeFragment.initTaskInfo(view);
         if (status) {
             //已完成
+            holder.imageView_status_right.setVisibility(View.VISIBLE);
             holder.time2.setTextColor(context.getResources().getColor(R.color.deleted));
             holder.textView_title.setTextColor(context.getResources().getColor(R.color.deleted));
             holder.textView_title.setPaintFlags(holder.textView_title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -173,6 +192,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
 
         } else {
             //未完成
+            holder.imageView_status_right.setVisibility(View.INVISIBLE);
             holder.time2.setTextColor(context.getResources().getColor(R.color.appThemeColor));
             holder.textView_title.setTextColor(context.getResources().getColor(R.color.black));
             holder.textView_title.setPaintFlags(holder.textView_title.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
@@ -183,6 +203,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
             holder.vitality.setTextColor(context.getResources().getColor(R.color.Gray));
 
         }
+        com.magicalstory.vitality.tasks.initAllCompletedTasks();
 
     }
 
@@ -192,11 +213,13 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
         HomeFragment.initTaskInfo(view);
         if (status) {
             //已完成
+            holder.imageView_status_right.setVisibility(View.VISIBLE);
             holder.textView_title.setTextColor(context.getResources().getColor(R.color.deleted));
             holder.textView_title.setPaintFlags(holder.textView_title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         } else {
             //未完成
+            holder.imageView_status_right.setVisibility(View.INVISIBLE);
             holder.textView_title.setTextColor(context.getResources().getColor(R.color.black));
             holder.textView_title.setPaintFlags(holder.textView_title.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
@@ -210,13 +233,11 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
 
     }
 
-    interface onClickListener {
-
-    }
 
     //viewHolder
     class viewHolder extends RecyclerView.ViewHolder {
         private TextView textView_title;//标题
+        private ConstraintLayout layout;//layout
         private TextView textView_date;//创建时间文本
         private ConstraintLayout status_button;//完成任务按钮布局
         private ImageView imageView_status_right;//完成任务中间的小图标
@@ -238,6 +259,7 @@ public class mainTaskListAdapter extends RecyclerView.Adapter<mainTaskListAdapte
             vitality = itemView.findViewById(R.id.vitality);
             time1 = itemView.findViewById(R.id.textView_time1);
             time2 = itemView.findViewById(R.id.textView_time2);
+            layout = itemView.findViewById(R.id.layout);
             time3 = itemView.findViewById(R.id.textView_time3);
 
         }

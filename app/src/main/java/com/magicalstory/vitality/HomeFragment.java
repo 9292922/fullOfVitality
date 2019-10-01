@@ -22,16 +22,24 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        initTaskList();//初始化任务列表
-        initTaskInfo(view);//刷新任务列表头部信息
-        initToDoList();//初始化todo列表
-        bingListener();//绑定主页新建按钮特效
+
+        if (ViewHoder.homeView == null) {
+            view = inflater.inflate(R.layout.fragment_home, container, false);
+            initTaskList();//初始化任务列表
+            initTaskInfo(view);//刷新任务列表头部信息
+            initToDoList();//初始化todo列表
+            bingListener();//绑定主页新建按钮特效
+            ViewHoder.homeView = view;
+        } else {
+            view = ViewHoder.homeView;
+        }
+
         return view;
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void bingListener() {final TextView button_new_task = view.findViewById(R.id.button_new_task);
+    private void bingListener() {
+        final TextView button_new_task = view.findViewById(R.id.button_new_task);
         final ConstraintLayout button_layout = view.findViewById(R.id.new_task_button);
         final ImageView icon = view.findViewById(R.id.imageView_icon_add);
         final ConstraintLayout todo_layout = view.findViewById(R.id.button_new_todo);
@@ -119,8 +127,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
         todo_text.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -199,39 +205,41 @@ public class HomeFragment extends Fragment {
     }
 
     static void initTaskInfo(View view) {
-        //初始化列表头部任务信息
-        TextView allTaskNum;
-        TextView completedTaskNum;
-        TextView uncpmletedTaskNum;
-        TextView vitalityToday;
+        //*初始化列表头部任务信息
+        TextView allTaskNum;//全部任务TextView
+        TextView completedTaskNum;//完成任务TextView
+        TextView uncpmletedTaskNum;//没完成TextView
+        TextView vitalityToday;//今日元气值TextView
         allTaskNum = view.findViewById(R.id.allTaskNum);
         completedTaskNum = view.findViewById(R.id.completedTaskNum);
         uncpmletedTaskNum = view.findViewById(R.id.uncompletedTaskNum);
         vitalityToday = view.findViewById(R.id.vitality_today);
+        //获取组件完毕
+
         allTaskNum.setText(String.valueOf(tasks.getAllTaskNum()));
         completedTaskNum.setText(String.valueOf(tasks.getCompletedTaskNum()));
         uncpmletedTaskNum.setText(String.valueOf(tasks.getAllTaskNum() - tasks.getCompletedTaskNum()));
         vitalityToday.setText(String.valueOf(tasks.getVitalityToday()));
     }
 
-    //初始化任务列表
+    //*初始化任务列表
     private void initTaskList() {
         com.magicalstory.vitality.tasks tasks01;
         //创建一个每天任务01
-        tasks01 = new tasks("早起挑战", 5, type.taskDateAlways, type.Task);
+        tasks01 = new tasks("早起挑战", 5, type.taskDateAlways, type.Task, "健康");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks01.setVitality(5);
         tasks01.setDate(0);
         tasks.getTaskList().add(tasks01);
         //创建一个每天任务02
-        tasks01 = new tasks("环校跑步", 2, type.taskDateAlways, type.Task);
+        tasks01 = new tasks("环校跑步", 2, type.taskDateAlways, type.Task, "健康");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks01.setValue(3000);
         tasks01.setDanwei("米");
         tasks01.setDate(0);
         tasks.getTaskList().add(tasks01);
         //创建一个时间段任务03
-        tasks01 = new tasks("读四大名著", 2, type.taskDate, type.Task);
+        tasks01 = new tasks("读四大名著", 2, type.taskDate, type.Task, "学习");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks01.setValue(3);
         tasks01.setDays(30);
@@ -242,7 +250,7 @@ public class HomeFragment extends Fragment {
         tasks.getTaskList().add(tasks01);
 
         //创建一个时间段任务03
-        tasks01 = new tasks("深蹲", 3, type.taskDate, type.Task);
+        tasks01 = new tasks("深蹲", 3, type.taskDate, type.Task, "健身");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks01.setValue(40);
         tasks01.setDays(100);
@@ -253,14 +261,20 @@ public class HomeFragment extends Fragment {
 
 
         //创建一个每天任务04
-        tasks01 = new tasks("学习英语单词", 20, type.taskDateAlways, type.Task);
+        tasks01 = new tasks("学习英语单词", 20, type.taskDateAlways, type.Task, "健康");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks01.setValue(2);
         tasks01.setDanwei("小时");
         tasks01.setDate(0);
         tasks.getTaskList().add(tasks01);
 
-
+//创建一个每天任务04
+        tasks01 = new tasks("看佛学", 20, type.taskDateAlways, type.Task, "修身");
+        tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
+        tasks01.setValue(3);
+        tasks01.setDanwei("小时");
+        tasks01.setDate(0);
+        tasks.getTaskList().add(tasks01);
         RecyclerView recyclerLayoutTask;
         recyclerLayoutTask = (RecyclerView) view.findViewById(R.id.list_task);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -275,30 +289,30 @@ public class HomeFragment extends Fragment {
     }
 
 
-    //初始化todo列表
+    //*初始化todo列表
     private void initToDoList() {
         com.magicalstory.vitality.tasks tasks01;
         //创建一个ToDo01
-        tasks01 = new tasks("帮陈志坤寄东西", 5, type.taskDateAlways, type.ToDo);
+        tasks01 = new tasks("帮陈志坤寄东西", 5, type.taskDateAlways, type.ToDo, "待做");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks.getTodoList().add(tasks01);
         //创建一个每天ToDo02
-        tasks01 = new tasks("买个厕所清洁剂", 2, type.taskDateAlways, type.ToDo);
+        tasks01 = new tasks("买个厕所清洁剂", 2, type.taskDateAlways, type.ToDo, "待做");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks.getTodoList().add(tasks01);
         //创建一个时间段ToDo03
-        tasks01 = new tasks("下午去剪个帅气的发型", 2, type.taskDate, type.ToDo);
+        tasks01 = new tasks("下午去剪个帅气的发型", 2, type.taskDate, type.ToDo, "待做");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks.getTodoList().add(tasks01);
 
         //创建一个时间段ToDo03
-        tasks01 = new tasks("帮同学做PPT", 3, type.taskDate, type.ToDo);
+        tasks01 = new tasks("帮同学做PPT", 3, type.taskDate, type.ToDo, "待做");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks.getTodoList().add(tasks01);
 
 
         //创建一个每天ToDo04
-        tasks01 = new tasks("收顺丰快递-小狗狗", 20, type.taskDateAlways, type.ToDo);
+        tasks01 = new tasks("收顺丰快递-小狗狗", 20, type.taskDateAlways, type.ToDo, "待做");
         tasks01.setStatus(new Random().nextBoolean());//随机设置一个任务完成状态
         tasks.getTodoList().add(tasks01);
 
@@ -317,8 +331,11 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        ViewHoder.homeView = view;
+    }
 }
 
 

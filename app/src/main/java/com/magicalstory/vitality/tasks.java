@@ -13,12 +13,13 @@ public class tasks {
     private static int completedTaskNum;//已完成任务
     private static int vitalityToday;//今天元气值
     private String name;//任务名字
+    private String targetType;//定义任务的类型:如健康，学习，健身...
     private boolean status;//任务状态
     private String danwei;//定义单位
-    private int taskType;//任务类型
+    private int taskType;//任务类型:如时间段任务，每天任务...
     private int vitality;//任务的元气值
     private int date;//任务的创建日期
-    private int type;//任务的类型，分为任务和待做
+    private int type;//类型，分为任务和todo
     private int days;//总天数
     private int keeyDays;//坚持的天数
     private int daysRest;//剩余天数
@@ -26,6 +27,30 @@ public class tasks {
     private int value;//任务的值
     private static ArrayList<tasks> taskList=new ArrayList<>();//任务数组
     private static ArrayList<tasks> todoList=new ArrayList<>();//todo数组
+//构造函数
+    tasks(String name, int vitality, int taskType, int type,String targetType) {
+        this.type = type;//类型:todo或者任务
+        this.targetType = targetType;//目标类型
+        this.taskType = taskType;//任务类型
+        this.vitality = vitality;//该任务的元气值
+        this.name = name;//任务名字
+        id = name + "@type=" + type + "@vitality=" + vitality;//初始化id
+
+        if (type == com.magicalstory.vitality.type.Task) {
+            allTaskNum += 1;
+        }else {
+            allToDoNum += 1;
+        }
+    }
+
+
+    public String getTargetType() {
+        return targetType;
+    }
+
+    public void setTargetType(String targetType) {
+        this.targetType = targetType;
+    }
 
     public static ArrayList<tasks> getTodoList() {
         return todoList;
@@ -54,22 +79,6 @@ public class tasks {
     public static void setTaskList(ArrayList<tasks> taskList) {
         tasks.taskList = taskList;
     }
-
-    tasks(String name, int vitality, int taskType, int type) {
-        this.type = type;
-        this.taskType = taskType;
-        this.vitality = vitality;
-        this.name = name;
-        id = name + "@type=" + type + "@vitality=" + vitality;
-        if (type == com.magicalstory.vitality.type.Task) {
-            allTaskNum += 1;
-        }else {
-            allToDoNum += 1;
-        }
-
-
-    }
-
 
     int getValue() {
         return value;
@@ -147,7 +156,6 @@ public class tasks {
         daysRest = days - this.keeyDays;
     }
 
-
     public int getVitality() {
         return vitality;
     }
@@ -188,15 +196,23 @@ public class tasks {
     void setStatus(boolean status) {
 
         this.status = status;
-        initAllCompletedTasks();
+        if (status) {
+            vitalityToday += this.getVitality();
+        } else {
+            vitalityToday -= this.getVitality();
+        }
+
 
     }
 
     static void initAllCompletedTasks() {
         //判断状态，循环任务列表找出已经完成的任务总数
         int num=0;
+        vitalityToday = 0;
         for (int n = 0; n<taskList.size();n++) {
-            if (taskList.get(n).isStatus() == true) {
+            tasks task=taskList.get(n);
+            if (task.isStatus() == true) {
+                vitalityToday += task.getVitality();
                 num++;
             }
         }

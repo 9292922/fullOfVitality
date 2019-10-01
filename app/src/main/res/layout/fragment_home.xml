@@ -5,10 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,17 +35,137 @@
                         android:layout_height="wrap_content"
                         android:background="#07FFBF00">
 
-                        <TextView
-                            android:id="@+id/textView_tips"
+                        <ImageView
+                            android:id="@+id/imageView6"
                             android:layout_width="0dp"
-                            android:layout_height="40dp"
-                            android:background="#5BFFC400"
+                            android:layout_height="3dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            app:layout_constraintBottom_toTopOf="@+id/cardView_todo"
+                            app:layout_constraintEnd_toEndOf="@+id/cardView_task"
+                            app:layout_constraintStart_toStartOf="@+id/cardView_task"
+                            app:layout_constraintTop_toBottomOf="@+id/cardView_task"
+                            app:srcCompat="@drawable/divider_dash" />
+
+                        <TextView
+                            android:id="@+id/bottom_tips"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
                             android:gravity="center"
-                            android:text="@string/tips_title"
-                            android:textColor="#ffffff"
+                            android:maxLines="1"
+                            android:text="@string/main_bottom_tips"
+                            android:textColor="#40968F8F"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/cardView_todo"
+                            app:layout_constraintStart_toStartOf="@+id/cardView_todo" />
+
+                        <View
+                            android:id="@+id/divider_header_bottom"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#40FFE082"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/foreground" />
+                            app:layout_constraintTop_toBottomOf="@+id/textView_tips" />
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardView_todo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_marginBottom="100dp"
+                            android:background="@drawable/main_cardview_ripple"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:longClickable="true"
+                            app:cardElevation="1dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/task_constraintlayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ImageView
+                                    android:id="@+id/imageView5"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:layout_marginStart="13dp"
+                                    android:layout_marginTop="20dp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:srcCompat="@drawable/todo_round_view" />
+
+                                <RelativeLayout
+                                    android:layout_width="360dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="50dp"
+                                    android:layout_marginBottom="25dp"
+                                    app:layout_constraintBottom_toTopOf="@+id/button_new_todo"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="parent">
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/list_todo"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/textView_todo_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:text="@string/todo"
+                                    android:textColor="#000000"
+                                    android:textSize="18sp"
+                                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                                    app:layout_constraintStart_toEndOf="@+id/imageView5"
+                                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/button_new_todo"
+                                    android:layout_width="200dp"
+                                    android:layout_height="40dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:background="@drawable/button_new_todo_common"
+                                    android:longClickable="true"
+                                    app:layout_constraintBottom_toBottomOf="parent"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent">
+
+                                    <ImageView
+                                        android:id="@+id/icon_new_todo"
+                                        android:layout_width="15dp"
+                                        android:layout_height="15dp"
+                                        android:layout_marginEnd="4dp"
+                                        android:longClickable="true"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toStartOf="@+id/new_todo"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:srcCompat="@drawable/icon_new_todo_common" />
+
+                                    <TextView
+                                        android:id="@+id/new_todo"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:longClickable="true"
+                                        android:text="新建TODO"
+                                        android:textColor="#FFFFFF"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintHorizontal_bias="0.57"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+                        </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardView_task"
@@ -59,8 +175,12 @@
                             android:layout_marginTop="15dp"
                             android:layout_marginEnd="15dp"
                             android:layout_marginBottom="30dp"
+                            android:background="@drawable/main_cardview_ripple"
+                            android:clickable="true"
                             android:focusable="true"
                             android:focusableInTouchMode="true"
+                            android:longClickable="true"
+                            app:cardElevation="1dp"
                             app:layout_constraintBottom_toTopOf="@+id/cardView_todo"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -76,8 +196,7 @@
                                     android:id="@+id/imageView4"
                                     android:layout_width="12dp"
                                     android:layout_height="12dp"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginStart="13dp"
                                     android:layout_marginTop="20dp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
@@ -92,6 +211,26 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/textView_task_title"
                                     app:srcCompat="@drawable/divider_dash" />
+
+                                <RelativeLayout
+                                    android:id="@+id/taskList"
+                                    android:layout_width="360dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="22dp"
+                                    android:layout_marginBottom="25dp"
+
+                                    android:gravity="center"
+                                    app:layout_constraintBottom_toTopOf="@+id/new_task_button"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toTopOf="@+id/imageView_divider">
+
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/list_task"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+                                </RelativeLayout>
 
                                 <TextView
                                     android:id="@+id/title_today_tasks3"
@@ -197,12 +336,12 @@
                                     app:layout_constraintVertical_bias="0.0" />
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:clickable="true"
                                     android:id="@+id/new_task_button"
                                     android:layout_width="200dp"
                                     android:layout_height="40dp"
                                     android:layout_marginBottom="15dp"
                                     android:background="@drawable/button_new_task_selector"
+                                    android:clickable="true"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent">
@@ -233,134 +372,57 @@
 
                                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                                <RelativeLayout
-                                    android:id="@+id/taskList"
-                                    android:layout_width="360dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="22dp"
-                                    android:layout_marginBottom="25dp"
-                                    app:layout_constraintBottom_toTopOf="@+id/new_task_button"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="@+id/imageView_divider">
-
-
-                                    <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/list_task"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_alignParentStart="true"
-                                        android:layout_alignParentTop="true"
-                                        android:layout_alignParentEnd="true"
-                                        android:layout_alignParentBottom="true"
-                                        android:layout_marginStart="0dp"
-                                        android:layout_marginTop="0dp"
-                                        android:layout_marginEnd="0dp"
-                                        android:layout_marginBottom="0dp" />
-                                </RelativeLayout>
-
-
-                            </androidx.constraintlayout.widget.ConstraintLayout>
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/cardView_todo"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginEnd="15dp"
-                            android:layout_marginBottom="100dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent">
-
-                            <androidx.constraintlayout.widget.ConstraintLayout
-                                android:id="@+id/task_constraintlayout"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <ImageView
-                                    android:id="@+id/imageView5"
-                                    android:layout_width="12dp"
-                                    android:layout_height="12dp"
-                                    android:layout_marginStart="16dp"
-                                    android:layout_marginTop="20dp"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/todo_round_view" />
-
-                                <RelativeLayout
-                                    android:layout_width="360dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="50dp"
-                                    android:layout_marginBottom="25dp"
-                                    app:layout_constraintBottom_toTopOf="@+id/button_new_todo"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent">
-
-                                    <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/list_todo"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content" />
-                                </RelativeLayout>
-
-                                <TextView
-                                    android:id="@+id/textView_todo_title"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="5dp"
-                                    android:text="@string/todo"
-                                    android:textColor="#000000"
-                                    android:textSize="18sp"
-                                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                                    app:layout_constraintStart_toEndOf="@+id/imageView5"
-                                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
-
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:id="@+id/button_new_todo"
-                                    android:layout_width="200dp"
-                                    android:longClickable="true"
-                                    android:layout_height="40dp"
-                                    android:layout_marginBottom="15dp"
-                                    android:background="@drawable/button_new_todo_common"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent">
-
-                                    <ImageView
-                                        android:longClickable="true"
-                                        android:id="@+id/icon_new_todo"
-                                        android:layout_width="15dp"
-                                        android:layout_height="15dp"
-                                        android:layout_marginEnd="4dp"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintEnd_toStartOf="@+id/new_todo"
-                                        app:layout_constraintTop_toTopOf="parent"
-                                        app:srcCompat="@drawable/icon_new_todo_common" />
-
-                                    <TextView
-                                        android:id="@+id/new_todo"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="新建TODO"
-                                        android:longClickable="true"
-                                        android:textColor="#FFFFFF"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintHorizontal_bias="0.57"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent" />
-                                </androidx.constraintlayout.widget.ConstraintLayout>
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
                         </androidx.cardview.widget.CardView>
 
                         <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/textView_tips"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:background="#5BFFC400"
+                            android:gravity="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/foreground">
+
+                            <ImageView
+                                android:id="@+id/imageView7"
+                                android:layout_width="7dp"
+                                android:layout_height="7dp"
+                                app:layout_constraintStart_toEndOf="@+id/textView"
+                                app:layout_constraintTop_toTopOf="@+id/textView"
+                                app:srcCompat="@drawable/icon_tips_left" />
+
+                            <ImageView
+                                android:id="@+id/imageView8"
+                                android:layout_width="7dp"
+                                android:layout_height="7dp"
+                                app:layout_constraintEnd_toStartOf="@+id/textView"
+                                app:layout_constraintTop_toTopOf="@+id/textView"
+                                app:srcCompat="@drawable/icon_tips_right" />
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="你要做一个元气满满的男孩哦"
+                                android:textColor="@color/White"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/foreground"
                             android:layout_width="0dp"
-                            android:layout_height="300dp"
-                            android:background="@color/splashBackgroundColor"
+                            android:layout_height="280dp"
+                            android:background="@drawable/main_header_ripple"
+                            android:clickable="true"
+                            android:longClickable="true"
+
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
@@ -427,8 +489,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="10dp"
-                                android:layout_marginRight="10dp"
                                 android:foregroundGravity="center_vertical"
+                                android:paddingBottom="1dp"
                                 android:text="@string/value_total_vitality"
                                 android:textColor="#ffffff"
                                 android:textSize="20sp"
@@ -492,8 +554,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginEnd="5dp"
-                                    android:layout_marginRight="5dp"
                                     android:gravity="center_vertical"
+                                    android:paddingBottom="1dp"
                                     android:text="@string/vitality_today_title"
                                     android:textColor="#ffffff"
                                     android:textSize="20sp"
@@ -517,40 +579,6 @@
                             android:orientation="vertical"
                             app:layout_constraintGuide_begin="7dp" />
 
-                        <ImageView
-                            android:id="@+id/imageView6"
-                            android:layout_width="0dp"
-                            android:layout_height="3dp"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginEnd="15dp"
-                            app:layout_constraintBottom_toTopOf="@+id/cardView_todo"
-                            app:layout_constraintEnd_toEndOf="@+id/cardView_task"
-                            app:layout_constraintStart_toStartOf="@+id/cardView_task"
-                            app:layout_constraintTop_toBottomOf="@+id/cardView_task"
-                            app:srcCompat="@drawable/divider_dash" />
-
-                        <View
-                            android:id="@+id/divider_header_bottom"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="#40FFE082"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView_tips" />
-
-                        <TextView
-                            android:id="@+id/bottom_tips"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:gravity="center"
-                            android:maxLines="1"
-                            android:text="@string/main_bottom_tips"
-                            android:textColor="#40968F8F"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/cardView_todo"
-                            app:layout_constraintStart_toStartOf="@+id/cardView_todo" />
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </LinearLayout>
@@ -562,29 +590,38 @@
                 android:layout_width="0dp"
                 android:layout_height="57dp"
                 android:background="@color/appThemeColor"
+                android:clickable="true"
+
+                android:longClickable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/imageView_like"
-                    android:layout_width="21dp"
-                    android:layout_height="21dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="2dp"
+
+                    android:layout_marginEnd="12dp"
+                    android:clickable="true"
                     android:contentDescription="@string/todo"
+                    android:longClickable="true"
                     app:layout_constraintBottom_toBottomOf="@+id/textView_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/textView_title"
                     app:layout_constraintVertical_bias="0.555"
-                    app:srcCompat="@drawable/icon_like" />
+                    app:srcCompat="@drawable/main_like_selector" />
 
                 <TextView
                     android:id="@+id/textView_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:longClickable="true"
+                    android:padding="8dp"
                     android:text="@string/app_name"
-                    android:textColor="#000000"
+                    android:textColor="@color/main_header_title_selector"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@+id/divider"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -621,5 +658,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
+
+    <data>
+
+    </data>
 </layout>
 
